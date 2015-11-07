@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GridFunctions.cs" />
     <Compile Include="Images.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Location.cs" />

@@ -35,6 +35,8 @@ namespace WpfApplication2
         int GridPixelWidth = 600; /// Should be GridWidth*TileWidth
         int GridPixelHeight = 600;
         Images ImageInstance = new Images();
+        GridFunctions GridInstance = new GridFunctions();
+
 
 
         Location[,] DisplayedTiles = new Location[10, 10];
@@ -52,7 +54,7 @@ namespace WpfApplication2
             InitializeComponent();
 
             DisplayedTiles = new Location[XDimension, YDimension];
-            DisplayedTiles = GenerateTileArray();
+            DisplayedTiles = GridInstance.GenerateTileArray(XDimension, YDimension);
 
             /// Create player sprite
             MainCanvas.Children.Add(PlayerSprite = new Image { Height = TileHeight, Width = TileWidth });
@@ -64,38 +66,6 @@ namespace WpfApplication2
             UpdateGridCentre(ThePlayer.XRef, ThePlayer.XRef, ThePlayer.YRef, ThePlayer.YRef);
         }
 
-
-        public Location[,] GenerateTileArray()
-        {
-
-            /// Declare a Location class array of length Dimension*Dimension
-            Location[,] LocArray = new Location[XDimension, YDimension];
-
-            /// Generate each tile
-            for (int x = 0; x < XDimension; x = x + 1)
-            {
-                for (int y = 0; y < YDimension; y = y + 1)
-                {
-                    int z = x * XDimension + y;   /// ID calculator
-                    Location location = new Location(z, x, y, "grass", "");
-                    LocArray[x, y] = location;
-                    string String = "ID: " + z + " Coord: " + location.XRef + "," + location.YRef;
-                }
-            }
-            LocArray[1, 4].ObjectType = "house7";
-            LocArray[2, 4].ObjectType = "house8";
-            LocArray[3, 4].ObjectType = "house9";
-            LocArray[1, 3].ObjectType = "house4";
-            LocArray[2, 3].ObjectType = "house5";
-            LocArray[3, 3].ObjectType = "house6";
-            LocArray[1, 2].ObjectType = "house1";
-            LocArray[2, 2].ObjectType = "house2";
-            LocArray[3, 2].ObjectType = "house3";
-
-            return LocArray;
-        }
-
-
         public void UpdateCoords()
         {
             int X = ThePlayer.XRef;
@@ -104,37 +74,18 @@ namespace WpfApplication2
             /// CoOrdLabel.Text = X + ", " + Y;
         }
 
-        public void UpdatePlayerSprite(int oldx, int newx, int oldy, int newy)
-        {
-            int OldX = oldx; int NewX = newx; int OldY = oldy; int NewY = newy;
-            /// For some reason there's a thick 'outline' of green at the top when zoomed in you can't walk on.
-            ThePlayer.XRef = NewX;
-            ThePlayer.YRef = NewY;
-
-            int GridX = ThePlayer.XRef % GridWidth;
-            int GridY = ThePlayer.YRef % GridHeight;
-
-            /// PlayerSprite.Location = new Point(100 + (GridX * TileWidth), TopGrid - (GridY * TileHeight));
-            Canvas.SetLeft(PlayerSprite, LeftGrid + (GridX * TileWidth));
-            Canvas.SetTop(PlayerSprite, TopGrid + ((GridHeight - 1 - GridY) * TileHeight));
-            Canvas.SetZIndex(PlayerSprite, 2);
-            PlayerSprite.Width = TileWidth;
-            PlayerSprite.Height = TileHeight;
-
-        }
-
         public void CreateGrid(int gridwidth, int gridheight)
         {
-        /// Step 1: Clear any tiles & objects that need to be cleared.
-        /// Step 2: Set the dimensions of the tiles.
-        /// Step 3: Add the needed tile & object boxes (Should they be added to the canvas? Is that a potential leak??)
-        /// Step 4: Add the rectangles around the grid
-        /// Step 5: Run the grid update.
+            /// Step 1: Clear any tiles & objects that need to be cleared.
+            /// Step 2: Set the dimensions of the tiles.
+            /// Step 3: Add the needed tile & object boxes (Should they be added to the canvas? Is that a potential leak??)
+            /// Step 4: Add the rectangles around the grid
+            /// Step 5: Run the grid update.
             for (int x = 0; x < 64; x = x + 1)
             {
                 for (int y = 0; y < 64; y = y + 1)
                 {
-                    if (Box[x,y] != null)
+                    if (Box[x, y] != null)
                     {
                         Box[x, y].Source = null;
                     }
@@ -156,7 +107,7 @@ namespace WpfApplication2
             double GPW = GridPixelWidth; double GPH = GridPixelHeight;
             double GW = GridWidth; double GH = GridHeight;
             TileWidth = GPW / GW; ///So like 720/24
-            TileHeight = GPH / GH; 
+            TileHeight = GPH / GH;
 
             /// For some reason the grid will still fluctuate in size.
             /// Best to put some images over the edges of the grid so you can't see it.
@@ -173,15 +124,15 @@ namespace WpfApplication2
                     Canvas.SetTop(Box[x, y], TopGrid + (k * (TileHeight - 1)));
 
                     MainCanvas.Children.Add(ObjectBox[x, y] = new Image { Height = TileHeight, Width = TileWidth });
-                    Canvas.SetLeft(ObjectBox[x, y], LeftGrid + (x * (TileWidth-1)));
-                    Canvas.SetTop(ObjectBox[x, y], TopGrid + (k * (TileHeight-1)));
+                    Canvas.SetLeft(ObjectBox[x, y], LeftGrid + (x * (TileWidth - 1)));
+                    Canvas.SetTop(ObjectBox[x, y], TopGrid + (k * (TileHeight - 1)));
                 }
             }
 
             AddRectangle(1, 50, GridPixelHeight, LeftGrid, TopGrid);
-            AddRectangle(2, 50, GridPixelHeight, GridPixelWidth + LeftGrid-50, TopGrid);
+            AddRectangle(2, 50, GridPixelHeight, GridPixelWidth + LeftGrid - 50, TopGrid);
             AddRectangle(3, GridPixelWidth, 50, LeftGrid, TopGrid);
-            AddRectangle(4, GridPixelWidth, 50, LeftGrid, GridPixelHeight + TopGrid-50);
+            AddRectangle(4, GridPixelWidth, 50, LeftGrid, GridPixelHeight + TopGrid - 50);
 
             UpdateGridCentre(ThePlayer.XRef, ThePlayer.XRef, ThePlayer.YRef, ThePlayer.YRef);
         }
@@ -214,7 +165,7 @@ namespace WpfApplication2
                     int m = i - ((GridWidth - 1) / 2) + x;
                     int n = j - ((GridHeight - 1) / 2) + y;
 
-                    if ((m>= 0 & m<XDimension) & (n>=0 & n< YDimension))
+                    if ((m >= 0 & m < XDimension) & (n >= 0 & n < YDimension))
                     {
                         if (DisplayedTiles[m, n].TileType != "")
                         {
@@ -269,7 +220,7 @@ namespace WpfApplication2
                         int OldX = ThePlayer.XRef;
                         int NewX = ThePlayer.XRef;
                         int OldY = ThePlayer.YRef;
-                        int NewY = ThePlayer.YRef-1;
+                        int NewY = ThePlayer.YRef - 1;
                         UpdateGridCentre(OldX, NewX, OldY, NewY);
                         UpdateCoords();
                     }
@@ -278,7 +229,7 @@ namespace WpfApplication2
                     if (ThePlayer.XRef < XDimension - 1)
                     {
                         int OldX = ThePlayer.XRef;
-                        int NewX = ThePlayer.XRef+1;
+                        int NewX = ThePlayer.XRef + 1;
                         int OldY = ThePlayer.YRef;
                         int NewY = ThePlayer.YRef;
                         UpdateGridCentre(OldX, NewX, OldY, NewY);
@@ -289,7 +240,7 @@ namespace WpfApplication2
                     if (ThePlayer.XRef > 0)
                     {
                         int OldX = ThePlayer.XRef;
-                        int NewX = ThePlayer.XRef-1;
+                        int NewX = ThePlayer.XRef - 1;
                         int OldY = ThePlayer.YRef;
                         int NewY = ThePlayer.YRef;
                         UpdateGridCentre(OldX, NewX, OldY, NewY);
