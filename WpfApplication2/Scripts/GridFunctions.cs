@@ -1,14 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace Engine
+
+namespace WpfApplication2.Scripts
 {
     public class GridFunctions
     {
-        public Location[,] GenerateTileArray(int XDimension, int YDimension)
+        public static Location[,] GenerateTileArray(int XDimension, int YDimension)
         {
 
             /// Declare a Location class array of length Dimension*Dimension
@@ -36,6 +44,20 @@ namespace Engine
             LocArray[3, 2].ObjectType = "house3";
 
             return LocArray;
-        }        
+        }
+
+        public static Rectangle AddRectangle(int width, int height, int TopX, int TopY)
+        {
+            Rectangle TempRect;
+            TempRect = new Rectangle { Height = height, Width = width };
+            Canvas.SetLeft(TempRect, TopX);
+            Canvas.SetTop(TempRect, TopY);
+            TempRect.Fill = new SolidColorBrush(System.Windows.Media.Colors.Gray);
+            Canvas.SetZIndex(TempRect, 3);
+            return TempRect;
+            /// This will be Z of 3, ahead of player (2), object (1), tile (0).
+        }
+
+
     }
 }

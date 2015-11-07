@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{D233E08E-2A30-44E4-949D-8334B4B11C54}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication2", "WpfApplication2\WpfApplication2.csproj", "{FC5AFDEB-410C-4CAD-887F-A75026A3D39F}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D233E08E-2A30-44E4-949D-8334B4B11C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D233E08E-2A30-44E4-949D-8334B4B11C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D233E08E-2A30-44E4-949D-8334B4B11C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D233E08E-2A30-44E4-949D-8334B4B11C54}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FC5AFDEB-410C-4CAD-887F-A75026A3D39F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC5AFDEB-410C-4CAD-887F-A75026A3D39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC5AFDEB-410C-4CAD-887F-A75026A3D39F}.Release|Any CPU.ActiveCfg = Release|Any CPU

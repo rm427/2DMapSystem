@@ -71,6 +71,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Scripts\Functions.cs" />
+    <Compile Include="Scripts\GridFunctions.cs" />
+    <Compile Include="Images.cs" />
+    <Compile Include="Scripts\Location.cs" />
+    <Compile Include="Scripts\Player.cs" />
+    <Compile Include="Scripts\Images.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -113,12 +119,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engine\Engine.csproj">
-      <Project>{d233e08e-2a30-44e4-949d-8334b4b11c54}</Project>
-      <Name>Engine</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\House\1.png" />
     <Resource Include="Resources\House\2.png" />
     <Resource Include="Resources\House\3.png" />
@@ -148,6 +148,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

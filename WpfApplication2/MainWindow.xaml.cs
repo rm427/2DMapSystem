@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApplication2.Scripts;
 
-using Engine;
 
 namespace WpfApplication2
 {
@@ -35,15 +35,12 @@ namespace WpfApplication2
         int GridPixelWidth = 600; /// Should be GridWidth*TileWidth
         int GridPixelHeight = 600;
         Images ImageInstance = new Images();
-        GridFunctions GridInstance = new GridFunctions();
-
 
 
         Location[,] DisplayedTiles = new Location[10, 10];
         Image[,] Box = new Image[65, 65];
         Image[,] ObjectBox = new Image[65, 65];
 
-        Rectangle[] BoundRectangle = new Rectangle[5];
 
         /// Generate player
         Player ThePlayer = new Player(10, 10, 100, "PlayerImage", 15, 15);
@@ -54,7 +51,7 @@ namespace WpfApplication2
             InitializeComponent();
 
             DisplayedTiles = new Location[XDimension, YDimension];
-            DisplayedTiles = GridInstance.GenerateTileArray(XDimension, YDimension);
+            DisplayedTiles = GridFunctions.GenerateTileArray(XDimension, YDimension);
 
             /// Create player sprite
             MainCanvas.Children.Add(PlayerSprite = new Image { Height = TileHeight, Width = TileWidth });
@@ -128,23 +125,14 @@ namespace WpfApplication2
                     Canvas.SetTop(ObjectBox[x, y], TopGrid + (k * (TileHeight - 1)));
                 }
             }
+            Rectangle[] BoundRectangle = new Rectangle[5];
 
-            AddRectangle(1, 50, GridPixelHeight, LeftGrid, TopGrid);
-            AddRectangle(2, 50, GridPixelHeight, GridPixelWidth + LeftGrid - 50, TopGrid);
-            AddRectangle(3, GridPixelWidth, 50, LeftGrid, TopGrid);
-            AddRectangle(4, GridPixelWidth, 50, LeftGrid, GridPixelHeight + TopGrid - 50);
+            MainCanvas.Children.Add(BoundRectangle[1] = GridFunctions.AddRectangle(50, GridPixelHeight, LeftGrid, TopGrid));
+            MainCanvas.Children.Add(BoundRectangle[2] = GridFunctions.AddRectangle(50, GridPixelHeight, GridPixelWidth + LeftGrid - 50, TopGrid));
+            MainCanvas.Children.Add(BoundRectangle[3] = GridFunctions.AddRectangle(GridPixelWidth, 50, LeftGrid, TopGrid));
+            MainCanvas.Children.Add(BoundRectangle[4] = GridFunctions.AddRectangle(GridPixelWidth, 50, LeftGrid, GridPixelHeight + TopGrid - 50));
 
             UpdateGridCentre(ThePlayer.XRef, ThePlayer.XRef, ThePlayer.YRef, ThePlayer.YRef);
-        }
-
-        public void AddRectangle(int ID, int width, int height, int TopX, int TopY)
-        {
-            MainCanvas.Children.Add(BoundRectangle[ID] = new Rectangle { Height = height, Width = width });
-            Canvas.SetLeft(BoundRectangle[ID], TopX);
-            Canvas.SetTop(BoundRectangle[ID], TopY);
-            BoundRectangle[ID].Fill = new SolidColorBrush(System.Windows.Media.Colors.Gray);
-            Canvas.SetZIndex(BoundRectangle[ID], 3);
-            /// This will be Z of 3, ahead of player (2), object (1), tile (0).
         }
 
         public void UpdateGridCentre(int oldx, int newx, int oldy, int newy)
@@ -181,11 +169,9 @@ namespace WpfApplication2
                     {
                         Box[x, y].Source = new BitmapImage(new Uri(ImageInstance.UpdateDisplayedTile("empty"), UriKind.Absolute));
                     }
-
-
-
                 }
             }
+
             Canvas.SetLeft(PlayerSprite, LeftGrid + (((GridWidth - 1) / 2) * (TileWidth - 1)));
             Canvas.SetTop(PlayerSprite, TopGrid + (((GridHeight - 1) / 2) * (TileHeight - 1)));
             Canvas.SetZIndex(PlayerSprite, 2);
