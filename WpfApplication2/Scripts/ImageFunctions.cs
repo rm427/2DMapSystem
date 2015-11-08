@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApplication2.Scripts
 {
-    public class Images
+    public class ImageFunctions
     {
         public string UpdateImage(string objecttype)
         {

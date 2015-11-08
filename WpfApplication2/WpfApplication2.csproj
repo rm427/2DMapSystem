@@ -72,12 +72,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Scripts\CSVFunctions.cs" />
-    <Compile Include="Scripts\Functions.cs" />
     <Compile Include="Scripts\GridFunctions.cs" />
-    <Compile Include="Images.cs" />
     <Compile Include="Scripts\Location.cs" />
     <Compile Include="Scripts\Player.cs" />
-    <Compile Include="Scripts\Images.cs" />
+    <Compile Include="Scripts\ImageFunctions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

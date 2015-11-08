@@ -35,7 +35,7 @@ namespace WpfApplication2
         int TopGrid = 75; /// The bottom pixel of the grid
         int GridPixelWidth = 600; /// Should be GridWidth*TileWidth
         int GridPixelHeight = 600;
-        Images ImageInstance = new Images();
+        ImageFunctions ImageInstance = new ImageFunctions();
 
 
         Location[,] DisplayedTiles = new Location[10, 10];
