@@ -9,7 +9,7 @@ namespace WpfApplication2.Scripts
 {
     class CSVFunctions
     {
-        public void SaveCSV(Location[,] array, string filename, int XDimension, int YDimension)
+        public static void SaveCSV(Location[,] array, string filename, int XDimension, int YDimension)
         {
             /// Will save to a .csv file. 
             /// 1st column) ID, 2) XRef, 3) YRef, 4) TileType, 5) ObjectType.
@@ -31,7 +31,7 @@ namespace WpfApplication2.Scripts
 
         }
 
-        public Location[,] LoadCSV(string filename)
+        public static Location[,] LoadCSV(string filename)
         {
             Location[,] LocationArray = new Location[0, 0];
             /// 1st column) ID, 2) XRef, 3) YRef, 4) TileType, 5) ObjectType.
