@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Scripts\CSVFunctions.cs" />
     <Compile Include="Scripts\Functions.cs" />
     <Compile Include="Scripts\GridFunctions.cs" />
     <Compile Include="Images.cs" />
